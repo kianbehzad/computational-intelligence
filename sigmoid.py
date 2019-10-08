@@ -2,11 +2,11 @@ import math
 import numpy as np
 
 def sigmoid(x: float):
-    return (2 / (1 + math.exp(-x))) - 1
+    return (1 / (1 + math.exp(-x)))
 
 def dSigmoid(x: float):
     #return (2*math.exp(-x)) / ((1 + math.exp(-x)) ** 2)
-    return (1 - sigmoid(x)**2) / 2
+    return sigmoid(x) * (1 - sigmoid(x))
 
 def sigmatrix(a: np.ndarray):
     sumSigmoid = 0

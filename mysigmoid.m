@@ -1,16 +1,26 @@
 clc;
 clear;
 
-[a, b] = sigmatrix([1 2 3; 1 2 3]);
-a
-b
+l = sigmoidMatrix([1 2 3; 4 5 10])
+h = dSigmoidMatrix([1 2 3; 4 5 10])
+
+
 
 function sig = sigmoid(x)
-    sig = (2/ (1+exp(-x)) - 1);
+    sig = (1/ (1+exp(-x)));
 end
 
-function sig = dSigmoid(x)
-    sig = (1 - sigmoid(x).^2) / 2;
+function sig = sigmoidMatrix(a)
+    mySize = size(a);
+    sig = zeros(mySize(1), mySize(2));
+    d = mySize(1)+mySize(2) + 1;
+    for i = 1:d
+        sig(i) = sigmoid(a(i));
+    end
+end
+
+function sig = dSigmoidMatrix(x)
+    sig = sigmoidMatrix(x) .* (1 - sigmoidMatrix(x));
 end
 
 function [sumSigmoid, sumDSigmoid] = sigmatrix(a)
