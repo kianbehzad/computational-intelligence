@@ -1,6 +1,5 @@
 import math
 import numpy as np
-import pandas
 
 def sigmoid(x: float):
     return (2 / (1 + math.exp(-x))) - 1
