@@ -12,7 +12,8 @@ def sigmoid(x: np.ndarray):
                 a[i][j] = sigmoid(x[i][j])
         return a
 
-    if type(x) == np.int64 or type(x) == np.float:
+    #if type(x) == np.int64 or type(x) == np.float or type(x) == int or type(x) == float:
+    else:
         return (1 / (1 + math.exp(-x)))
 
 
@@ -28,5 +29,5 @@ def sigmatrix(a: np.ndarray):
         sumDSigmoid += dSigmoid(i)
     return (sumSigmoid, sumDSigmoid)
 
-a = np.array([[1, 2, 3], [4, 5, 10]])
-print(sigmoid(a))
+# a = np.array([[1, 2, 3], [4, 5, 10]])
+# print(sigmoid(a))
