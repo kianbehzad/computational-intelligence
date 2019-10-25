@@ -1,35 +1,58 @@
 import numpy as np
+import random
 
-def activation_func(x: float):
-    if(x > 0):
-        return 1
-    return 0
 
-w = np.array([0.1, 0.1, 0.5], dtype=float)
-y = np.array([[1, 1, -1], [1, 0, -1], [0, 1, -1], [0, 0, -1]])
-d = np.array([1, 1, 1, 0])
+class Perceptron():
+    def __init__(self):
+        self.number_of_layers = 0
+        self.number_of_last_layer_norons = 0
+        # augmented inputs
+        self.y = np.ndarray
+        # desired outputs
+        self.d = np.ndarray
+        # all weights
+        # w[0] all wights for layer one
+        # w[1][1] inputs weights in second noron from second layer
+        self.w = []
+        # outputs of each noron
+        # output[0] norons of first layer
+        # output[1][2] output of third noron in second layer
+        self.outputs = []
 
-k = 0
-p = 0
-e = 0
+    def train_data(self, input, output):
+        if input.ndim == 1:
+            input = np.array([input])
+            input = np.transpose(input)
+        self.y = np.zeros((input.shape[0], input.shape[1] + 1))
+        for i in range(len(input)):
+            self.y[i] = np.append(input[i], [-1])
+        self.number_of_last_layer_norons = len(self.y[0])
 
-while True:
-    net = np.dot(w, y[p])
-    o = activation_func(float(net))
-    r = d[p] - o
-    e = e + r**2
-    deltaW = r * y[p]
-    w = w + deltaW * 0.1
-    p = p+1
-    k = k+1
-    if(p >= 3):
-        p = 0
-        if(e == 0):
-            break
-        e = 0
+        self.d = output
 
-print(w)
-for i in range(4):
-    net = np.dot(w, y[i])
-    o = activation_func(float(net))
-    print(o)
+    def make_layer(self, number_of_norons):
+        self.number_of_layers += 1
+        temp = np.zeros((number_of_norons, self.number_of_last_layer_norons)).tolist()
+        self.number_of_last_layer_norons = number_of_norons
+        self.w.append(temp)
+        self.make_random_weights()
+        tmp = np.zeros(number_of_norons).tolist()
+        self.outputs.append(tmp)
+
+
+    def make_random_weights(self):
+        for i in range(len(self.w)):
+            for j in range(len(self.w[i])):
+                for k in range(len(self.w[i][j])):
+                    self.w[i][j][k] = random.randint(0, 50) / 100
+
+    def execute(self):
+        pass
+
+
+pr = Perceptron()
+input = np.array([[1, -1], [2, -1], [3, -1], [4, -1]], dtype=float)
+d = np.array([1, 5, 6, 7], dtype=float)
+pr.train_data(input, d)
+pr.make_layer(2)
+pr.make_layer(1)

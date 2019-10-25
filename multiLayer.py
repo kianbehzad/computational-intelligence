@@ -2,10 +2,11 @@ import numpy as np
 from sigmoid import sigmoid, dSigmoid
 import matplotlib.pyplot
 
+
 error = 0
-y = np.array([[1, 1, -1], [1, 0, -1], [0, 1, -1], [0, 0, -1]], dtype=float)
-d = np.array([0, 1, 1, 0], dtype=float)
-w1 = np.array([[.1, .2, .3], [.2, .3, .1]], dtype=float)
+y = np.array([[1, -1], [2, -1], [3, -1], [4, -1]], dtype=float)
+d = np.array([1, 5, 6, 7], dtype=float)
+w1 = np.array([[.1, .2], [.2, .3]], dtype=float)
 w2 = np.array([[.1, .1]], dtype=float)
 a = np.array([0, 0], dtype=float)
 counter = 0
@@ -19,7 +20,7 @@ while True:
     if counter == 3:
         step += 1
         print("error in {} -> {}".format(step, error))
-        if error < .001:
+        if error < .1:
             break
         error = 0
         counter = -1
