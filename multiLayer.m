@@ -19,7 +19,7 @@ while true
     
     if(counter == 4)
         step = step + 1;
-        error
+        fprintf('error in %i -> %f\n', step, error);
         if(error < .001)
             break
         end
@@ -34,7 +34,15 @@ while true
     
     w1 = w1 - F * transpose(w2) * s2 * y(counter,:);
     w2 = w2 - s2 * a;
-    
+end
+
+fprintf('---------------\n')
+for i=1:4
+    a(1) = sigmoid(w1(1,:) * transpose(y(counter,:)));
+    a(2) = sigmoid(w1(2,:) * transpose(y(counter,:)));
+    o = w2 * a';
+    p = ['[', num2str(y(i,1)), ',', num2str(y(i,2)), ']', ' -> ', num2str(o)];
+    disp(p); 
 end
 
 function sig = sigmoid(x)
