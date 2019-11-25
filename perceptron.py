@@ -101,7 +101,7 @@ class Perceptron():
 
             self.error += np.dot(np.transpose(self.outputs[-1] - self.d[self.counter]), (self.outputs[-1] - self.d[self.counter]))
 
-            if self.counter == 3:
+            if self.counter == len(self.y)-1:
                 self.step += 1
                 print("error in {} -> {}".format(self.step, self.error))
                 if self.error < self.max_error:
@@ -117,7 +117,7 @@ class Perceptron():
 
             for i in range(len(self.w)-1):
                 F = self.activation_function_diagonal(i+1)
-                self.w[i] = (self.w[i] - np.dot(np.transpose(np.array([np.dot(np.dot(F, np.transpose(self.w[i+1])), self.s[i+1])])), np.array([self.y[self.counter]]))).tolist()
+                self.w[i] = (self.w[i] - np.dot(np.transpose(np.array([np.dot(np.dot(F, np.transpose(self.w[i+1])), self.s[i+1])])), np.array([self.outputs[i]]))).tolist()
             self.w[-1] = (self.w[-1] - np.multiply(self.s[-1], self.outputs[-2])).tolist()
             self.counter += 1
             del self.outputs[0]
