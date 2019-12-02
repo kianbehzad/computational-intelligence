@@ -62,7 +62,7 @@ noisy_k = noisy("photo_k.jpg", 5)
 noisy_p = noisy("photo_p.jpg", 5)
 
 
-pattern = np.transpose(np.concatenate(([photo_b], [photo_d], [photo_g], [photo_k], [photo_p]), axis=0))
+pattern = np.transpose(np.concatenate(([photo_k], [photo_d], [photo_g], [photo_b], [photo_p]), axis=0))
 m = pattern.shape[0]
 n = pattern.shape[1]
 W = np.dot(pattern, np.transpose(pattern)) - n * np.eye(m)
@@ -75,7 +75,7 @@ W = np.dot(pattern, np.transpose(pattern)) - n * np.eye(m)
 # W_temp -= n * np.eye(m);
 # print(np.allclose(W, W_temp))
 
-input = photo_b
+input = noisy_b
 show_image_from_info(input)
 v0 = np.transpose(np.array([input]))
 
@@ -85,8 +85,9 @@ v_new = np.ones((len(v_old), 1))
 
 while True:
     v_new_temp = sign(np.dot(W, v_old))
-    debug_print(v_old, v_new_temp)
-    break
+    v_new = asyncron(v_new_temp, v_old)
+    # debug_print(v_old, v_new_temp)
+    # break
     counter += 1
     show_image_from_info(v_new)
     print("iter {} -> {}".format(counter, np.transpose(v_new)))
